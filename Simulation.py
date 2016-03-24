@@ -16,8 +16,8 @@ def Islinked (n,amount):#defineing "linked" particals, much like a chemical bond
         for a in range(l+1,amount):
             j=mag(n[l].pos-n[a].pos)
             if(j<1):
-                n[l].linked[a]=true
-                n[a].linked[l]=true
+                n[l].link[a]=true
+                n[a].link[l]=true
                 
 
 def Forcelinked (p1,p2):#the force that will be applied between two linked particals
@@ -67,17 +67,19 @@ n[6].v = n[6].p/n[6].mass
 j=0
 t=0
 dt=.1
-Islinked(n,active)
+
 while(t < 250):
     rate(60)
-    for m in range(0,active):
+    Islinked(n,active)
+    for m in range(0,active):#changing postion
         n[m].v = 0.5*(n[m].v + n[m].p/n[m].mass)
         n[m].pos+=n[m].v*dt
     for l in range(0,active):#Calculations of force between all objects
         for a in range(l+1,active):
             j=mag(n[l].pos-n[a].pos)
-            if(j<.8):
-                Force(n[l],n[a])
+
+            if(n[l].link[a]==true):Forcelinked(n[l],n[a])#calling functions
+            else: Forceunlinked(n[l],n[a])
             
 
     t += dt
