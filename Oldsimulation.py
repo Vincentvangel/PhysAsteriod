@@ -41,7 +41,7 @@ Te=float(0)
 G=25# parts for morse potential
 alpha = 3
 req = pow(2.,1/6)
-dt=.055
+dt=.03
 
 
 
@@ -75,7 +75,7 @@ while (x<6):#buiiding object d
 
     
     n[x].v = n[x].p/n[x].mass
-    n[x].pos+=(-10,0,.3)#starting point of objects
+    n[x].pos+=(-10,0,1)#starting point of objects
     n[x].make_trail=True
     
     x+=1
@@ -102,7 +102,7 @@ C1=vector(0,0,0)
 C2=vector(0,0,0)
 Ct=vector(0,0,0)
 while(t < 250):
-    rate(60)
+    rate(260)
     for m in range(0,26):
         n[m].v = 0.5*(n[m].v + n[m].p/n[m].mass)
         n[m].pos+=n[m].v*dt
@@ -123,11 +123,11 @@ while(t < 250):
     for f in range(0,26):
        
         vmag=abs(mag(n[f].v))
-        Tk+=0.5*n[f].mass*pow(vmag,2)
+        Tk+=n[f].mass*pow(vmag,2)
         
-        Tp+=n[f].Potential*.1
-       
-        Te+=n[f].Potential*.1+(0.5*n[f].mass*pow(vmag,2))
+        Tp+=n[f].Potential
+    Te=Tp+Tk
+
 
     #arrows
     for f in range(0,6):
